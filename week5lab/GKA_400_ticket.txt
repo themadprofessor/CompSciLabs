@@ -1,0 +1,25 @@
+Flight: GKA to HGU
+Carrier: Airlines PNG
+Duration: 39
+Total Cost: £202
+
+Flight: GKA to LAE
+Carrier: Airlines PNG
+Duration: 40
+Total Cost: £90
+
+Flight: GKA to MAG
+Carrier: Airlines PNG
+Duration: 37
+Total Cost: £66
+
+Flight: GKA to POM
+Carrier: Airlines PNG
+Duration: 82
+Total Cost: £101
+
+Flight: GKA to POM
+Carrier: Air Niugini
+Duration: 62
+Total Cost: £234
+
