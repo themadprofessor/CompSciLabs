@@ -9,6 +9,6 @@ Karen,Apr,2
 Wiktoria,Jul,14
 Rogan,Jun,29
 Fraser,Jan,4
-Cameron,Oct,1
-Chloe,Sep,30
+Cameron,Jan,1
+Chloe,Dec,31
 Sam,Feb,4
