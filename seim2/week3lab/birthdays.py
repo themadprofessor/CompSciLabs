@@ -5,10 +5,10 @@ MONTHS = {"Jan":1, "Feb":2, "Mar":3, "Apr":4, "May":5, "Jun":6, "Jul":7, "Aug":8
 def test_date(start_date, day):
     bday = date.today().replace(month=MONTHS[day["month"]], day=day["day"])
     diff = start_date - bday
-    """if not abs(diff.days) < 7:
+    if not abs(diff.days) < 7:
     	return (abs(start_date - bday.replace(year=date.today().year+1)).days) < 7
     else:
-        return True"""
+        return True
     
 
 def parse_entry(line):
