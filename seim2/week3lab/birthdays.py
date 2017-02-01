@@ -9,6 +9,7 @@ def test_date(start_date, day):
     	return (abs(start_date - bday.replace(year=date.today().year+1)).days) < 7
     else:
         return True
+    
 
 def parse_entry(line):
     split = line.split(",")
@@ -33,12 +34,3 @@ def print_bday_week(book, month, day):
     start_date = date.today().replace(month=MONTHS[month], day=day)
     for name, d in {name: d for name, d in book.iteritems() if test_date(start_date, d)}.iteritems():
     	print_bday_person(book, name)
-
-birthday_book = load_book()
-print "\tTest print_bday_person\n",
-print_bday_person(birthday_book, "John")
-print "\n\tTest print_bday_month\n",
-
-print_bday_month(birthday_book, "Apr")
-print "\n\tTest print_bday_week\n",
-print_bday_week(birthday_book, "Dec", 30)
