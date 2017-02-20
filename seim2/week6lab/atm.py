@@ -89,6 +89,7 @@ def dumpAccounts(accounts):
     with open("new_accounts.pck", "w") as f:
         pickle.dump(accounts, f)
 
+"""
 ACCOUNTS = loadAccounts()
 COMMANDS = {"w": withdraw,
             "d": deposit,
@@ -119,4 +120,4 @@ while not shouldExit:
     else:
         print "Invalid Account Number"
 
-dumpAccounts(ACCOUNTS)
+dumpAccounts(ACCOUNTS)"""
