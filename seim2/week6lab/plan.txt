@@ -30,7 +30,7 @@ Else:
     Else if option is m:
         2.4.5 Handle history dump
     Else if option is c:
-        2.4.6 Handle undo
+        2.4.6 Inform user of cancellation
 
 Refinement of 2.4.2:
 
@@ -57,10 +57,3 @@ For latest 6 transactions in history:
     2.4.5.3 Get type of transcation
     2.4.5.4 Get value of transaction
     2.4.5.5 Print this data in the form "date, time, type, value"
-
-Refinement of 2.4.6:
-
-For each transaction in history:
-    If transaction is withdraw:
-        2.4.6.1 Get value of transaction
-        2.4.6.
