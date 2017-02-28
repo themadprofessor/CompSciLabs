@@ -1,4 +1,5 @@
 from Tkinter import *
+import sys
 
 def load_cities(path="Lab Files/Cities.txt"):
     cities = {}
@@ -9,6 +10,7 @@ def load_cities(path="Lab Files/Cities.txt"):
                 x, y = int(split[0]), int(split[1])
             except ValueError:
                 print "Invalid number on line {}".format(i+1)
+		sys.exit(-1)
             cities[split[2]] = (x,y)
     return cities
 
@@ -30,7 +32,6 @@ def find_closest(start, search, dists):
             #print "    {} is closer to {} than {}".format(name, start, curr_name)
             curr_dist = dist
             curr_name = name
-    print "{} is the closest unvisiteded city to {}".format(curr_name, start)
     return curr_name
 
 def gen_tour(tour, dists):
@@ -49,3 +50,14 @@ def draw_tour(canvas, tour, dists):
     last_x, last_y = dists[tour[len(tour)-1]]
     first_x, first_y = dists[tour[0]]
     canvas.create_line(first_x, first_y, last_x, last_y)
+
+def calc_len(tour, dists):
+    total = 0
+    for i in xrange(len(tour)-1):
+        start_x, start_y = dists[tour[i]]
+	end_x, end_y = dists[tour[i+1]]
+	total += ((start_x - end_x)**2 + (start_y - end_y)**2)**(0.5)
+    first_x, first_y = dists[tour[0]]
+    last_x, last_y = dists[tour[len(tour)-1]]
+    total += ((first_x - last_x)**2 + (first_y - last_y)**2)**(0.5)
+    return total
