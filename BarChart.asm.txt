@@ -1,0 +1,189 @@
+;-----------------------------------------------------------------------
+; Sigma16 program BarChart
+; Computer Systems 1 Assessed Exercise
+; Stuart Reilly, 2258082, TU15, date
+; Your course (CS1Q or CS1S)
+
+; *** Starter file ***  change the filename to BarChart.asm.txt
+
+;-----------------------------------------------------------------------
+; Status report
+
+; Say what the status of your program is.  This is not documentation
+; of the program; it says what the status is.
+
+;-----------------------------------------------------------------------
+
+; This program prints a bar chart showing the values in an array x
+; containing a sequence of n integers.  There is also an integer limit
+; that is used to limit the length of output lines.
+
+; There is one line of output for each element of x, consisting of a
+; row of asterisks (*).  Normally, the number of asterisks in line is
+; x[i].  However, if x[i] is negative, then a minus sign is printed
+; instead of asterisks.  Furthermore, the number of asterisks printed
+; must never exceed limit.  If x[i] > limit then only limit asterisks
+; are printed, and they are followed by a greater-than sign (>) which
+; indicates that the output was truncated.
+
+;-----------------------------------------------------------------------
+; High level algorithm
+; 
+; for i := 0 to n-1
+;    k := 0
+;    if x[i] < 0
+;       then outbuf[k] := '-'
+;            k := k + 1
+;       else
+;          while k < x[i] && k < limit do
+;              outbuf[k] := '*'
+;              k := k + 1
+;          if k < x[i]
+;             then outbuf[k] := '>'
+;                  k := k + 1
+;    outbuf[k] := newline character
+;    k := k+1
+;    write outbuf with length = k
+
+;-----------------------------------------------------------------------
+; Intermediate level algorithm
+
+; (This is the "goto form" of the program.  It's written in high level
+;  language notation but limited to assignment statements, goto Label,
+;  if condition then goto Label, write.)
+
+;i := 0
+;:top
+;if !(i > n-1) goto end
+;    k := 0
+;
+;    if !(x[i] < 0) goto else     
+;    outbuf[k] := *
+;    k := k+1
+;    goto print
+;    :else
+;        :while
+;            if !(k < x[i] && k < limit) goto arrow
+;            outbuf[k] := '*'
+;            k := k + 1
+;            goto while
+;        :arrow
+;            if !(k < x[i]) then goto print
+;            outbuf[k] := '>'
+;            k := k + 1
+;
+;    :print
+;    outbuf[k] := '\n'
+;    k := k+1
+;    print outbuf
+;    i := i+1
+;    goto top
+;:end
+
+;-----------------------------------------------------------------------
+; Assembly language implementation
+ 
+-- Instructions go here, with proper comments
+ 
+       lea    R1,1[R0]         ; R1 = 1    line 88
+       lea    R2,2[R0]         ; R2 = 2
+       load   R3,n[R0]         ; R3 = n
+       load   R4,minus[R0]     ; R4 = -
+       load   R5,gt[R0]        ; R5 = >
+       load   R6,newline[R0]   ; R6 = /n
+       load   R7,star[R0]      ; R7 = *
+       load   R8,limit[R0]     ; R8 = limit
+       lea    R9,outbuf[R0]    ; R9 = addr for outbuf
+       lea    R10,0[R0]         ; R10 = 0 (i = 0)
+       sub    R3,R3,R1         ; R3 = R3 - R1 (R3 = n-1)
+  
+:top   cmpgt  R14,R10,R3        ; R14 = R10 > R3
+       jumpf  R14,end[R0]      ; Goto end if R14 is false
+       lea    R11,0[R0]        ; R11 = 0 (k = 0)
+       load   R12,x[R9]        ; R12 = x[R9] (R12 = x[i])
+       cmplt  R14,R12,R0       ; R14 = R12 > R0
+       jumpf  R14,else[R0]     ; Goto else if R14 is false
+       store  R6,outbuf[R11]   ; outbuf[R10] = R6 (outbuf[k] = *)
+       add    R11,R11,R1       ; R11 = R11 + R1 (k += 1)
+       jump   R0,print[R0]     ; Goto print
+ 
+:else  cmplt  R14,R11,R12      ; R14 = R11 < R12
+       cmplt  R13,R11,R8       ; R13 = R11 < R8
+       and    R14,R14,R13      ; R14 = R14 and R13
+       jumpf  R14,arrow[R0]    ; Goto arrow if R14 is false
+       store  R7,outbuf[R11]   ; outbuf[R10] = R7 (outbuf[k] = *)
+       add    R11,R11,R1       ; R11 = R11 + R1 (k += 1)
+       jump   R0,else[R0]      ; Goto else
+
+:arrow cmplt  R14,R11,R12      ; R14 = R11 < R12
+       jumpf  R14,print        ; Goto to print if R14 is false
+       store  R5,outbuf[R11]   ; outbuf[R11] = R5 (outbuf[k] = >)
+       add    R11,R11,R1       ; R11 = R11 + R1 (k += 1)
+
+:print store  R6,outbuf[R11]   ; outbuf[R11] = R6 (outbuf[k] = \n)
+       add    R11,R11,R1       ; R11 = R11 + R1 (k += 1)
+       trap   R2,R9,R11        ; Print outbuf
+       add    R10,R10,R1       ; R10 = R10 + R1 (i += 1)
+       jump   R0,top[R0]       ; Goto top
+
+:end
+      trap R0,R0,R0
+;-----------------------------------------------------------------------
+; Constants - initial values should not be changed
+
+minus   data  $002d   ; code for '-'
+gt      data  $003e   ; code for '>'
+newline data  $000a   ; code for newline
+star    data  $002a   ; code for '*'
+
+;-----------------------------------------------------------------------
+; Variables - these initial values may be changed
+
+limit   data    10    ; maximum number of * to write
+
+; x is the input: an array of n values to display in histogram
+n       data    15    ; size of array x
+x       data     1    ; x[0]
+        data     2
+        data     0
+        data     3
+        data    -2
+        data     7
+        data     8
+        data     9
+        data    10
+        data    11
+        data    12
+        data    50
+        data     3
+        data     2
+        data     1
+
+;-----------------------------------------------------------------------
+; Output buffer
+outbuf  data  $0000   ; outbuf[0]
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
+        data  $0000
