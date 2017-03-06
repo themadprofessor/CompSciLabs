@@ -4,7 +4,7 @@ from Tkinter import *
 # labels is a list of strings for the x-axis labels
 # data is a list of values to be used for the bars on the chart
 
-def chart( can, labels, data ):
+def chart( can, labels, data, correct):
     # Delete all before starting
     l = can.find_all()
     for i in l:
@@ -41,39 +41,59 @@ def chart( can, labels, data ):
 
     # Draw the bars 
     for i in range( len(data) ):
-        can.create_rectangle(xOrig+xScale*i+2,yOrig-yScale*data[i],
+    	if i == correct:
+            can.create_rectangle(xOrig+xScale*i+2,yOrig-yScale*data[i],
                              xOrig+xScale*i+xScale-2,yOrig,fill="green")
+	else:
+            can.create_rectangle(xOrig+xScale*i+2,yOrig-yScale*data[i],
+                             xOrig+xScale*i+xScale-2,yOrig,fill="red")
 
         
 # This sets up a window with a canvas for your bar chart to be drawn in,
 # and just now a single radio button
 
-def application():
+_GRAPH_CANS = []
+_GRAPH_CURR = 0
+_GRAPH_VAR = None
+_TOP = None
+
+def _go():
+    global _GRAPH_CURR
+    index = _GRAPH_VAR.get()
+    _GRAPH_CANS[_GRAPH_CURR].pack_forget()
+    _GRAPH_CANS[index].pack(fill=BOTH, expand=True)
+    _GRAPH_CURR = index
+    _GRAPH_CANS[index].update()
+    print _GRAPH_CANS[index].winfo_height(), _GRAPH_CANS[index].winfo_width()
+
+def application(count):
+    global _GRAPH_VAR, _TOP
     # Graphical user interface
-    root = Tk()                     # Top level window
-    root.title("PRS data viewer")
+    _TOP = Tk()                     # Top level window
+    _TOP.title("PRS data viewer")
+    _GRAPH_VAR = IntVar()
 
     ### Now create a frame to hold the various parts of the application
-    grapher = Frame( root )
-    grapher.grid()
-
-    # Put a canvas into it to draw on
-    graphCan = Canvas( grapher )    # Note, this is a Tkinter canvas!! 
-    graphCan.grid()
+    grapher = Frame( _TOP )
+    grapher.pack(fill=BOTH, expand=True)
 
     ### Now create a set of radio buttons along the bottom
     ### for choosing which question to view
     ### Put them in a new frame to get a tidy layout
-    buttons = Frame( root )  # This is to hold the buttons
-    buttons.grid()           # Display it under the canvas
-    iv = IntVar()            # To hold the value representing which radio button is pressed
+    buttons = Frame( _TOP )  # This is to hold the buttons
+    buttons.pack(fill=BOTH, expand=True)
 
-    def rbAction():
-        q = iv.get()
-        graphCan.create_text( 100,100, text=str( q ) )
+    
 
-    # Make one button
-    r = Radiobutton( buttons, value=0, variable=iv, indicatoron=0, text=' '+str( 1 )+' ', command=rbAction )
-    r.grid()
+    for i in xrange(count):
+        butt = Radiobutton(buttons, value=i, text=str(i+1), indicatoron=0, variable=_GRAPH_VAR, command=_go)
+        butt.grid(row=0,column=i)
+        graphCan = Canvas( grapher )    # Note, this is a Tkinter canvas!! 
+	_GRAPH_CANS.append(graphCan)
+    _GRAPH_CANS[0].pack(fill=BOTH, expand=True)
+    print _GRAPH_CANS[0].winfo_height(), _GRAPH_CANS[0].winfo_width()
 
-    root.mainloop()
+    return _GRAPH_CANS
+
+def complete():
+    _TOP.mainloop()

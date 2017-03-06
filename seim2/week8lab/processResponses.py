@@ -24,15 +24,15 @@ def load_responses(question_defs, path="Lab Files/Responses.txt"):
                     raise ValueError
             except ValueError:
                 print "Invalid question number! {}".format(split[0])
-                return
+	        continue
             
             try:
                 handset_id = int(split[1])
                 if handset_id < 1 or handset_id > 160:
                     raise ValueError
             except ValueError:
-                print "Invalid handset number! {}".format(split[i])
-                return
+                print "Invalid handset number! {}".format(split[1])
+                continue
 
             try:
                 response = int(split[2])
@@ -40,7 +40,7 @@ def load_responses(question_defs, path="Lab Files/Responses.txt"):
                     raise ValueError
             except ValueError:
                 print "Invalid response! {}".format(response)
-                return
+                continue
             
             get_or(responses, {}, question_no)[handset_id] = response
     return responses
@@ -79,7 +79,7 @@ def print_data(questions, responses):
         response_print = []
 
         for answer in xrange(1, questions[question]["count"] + 1):
-            correct_count = responses[question].values().count(questions[question]["correct"])
+            correct_count = responses[question].values().count(answer)
             if answer == questions[question]["correct"]:
                 response_print.append("**{}:{}**".format(answer, correct_count))
             else:
@@ -93,4 +93,14 @@ print_data(questions, responses)
 # For Part 2, uncomment the line below (with suitable modifications) to
 # start the graphical user interface.
 
+graphs = application(len(questions)-1)
+for i in xrange(len(graphs)):
+     labels = range(1, questions[i+1]["count"]+1)
+     data = []
+     for answer in xrange(1, questions[i+1]["count"] + 1):
+         count = responses[i+1].values().count(answer)
+	 data.append(count)
+     chart(graphs[i], labels, data, questions[i+1]["correct"])
+
+complete()
 # application(...) # The "..." indicates that parameters will be needed
