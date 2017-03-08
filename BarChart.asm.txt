@@ -1,8 +1,8 @@
 ;-----------------------------------------------------------------------
 ; Sigma16 program BarChart
 ; Computer Systems 1 Assessed Exercise
-; Stuart Reilly, 2258082, TU15, date
-; Your course (CS1Q or CS1S)
+; Stuart Reilly, 2258082, TU15, 08/03/17
+; CS1Q
 
 ; *** Starter file ***  change the filename to BarChart.asm.txt
 
@@ -54,21 +54,21 @@
 
 ;i := 0
 ;:top
-;if !(i > n-1) goto end
+;if i > n-1 goto end
 ;    k := 0
 ;
-;    if !(x[i] < 0) goto else     
-;    outbuf[k] := *
+;    if x[i] >= 0 goto else     
+;    outbuf[k] := -
 ;    k := k+1
 ;    goto print
 ;    :else
 ;        :while
-;            if !(k < x[i] && k < limit) goto arrow
+;            if k >= x[i] || k >= limit goto arrow
 ;            outbuf[k] := '*'
 ;            k := k + 1
 ;            goto while
 ;        :arrow
-;            if !(k < x[i]) then goto print
+;            if k >= x[i] then goto print
 ;            outbuf[k] := '>'
 ;            k := k + 1
 ;
@@ -83,51 +83,50 @@
 ;-----------------------------------------------------------------------
 ; Assembly language implementation
  
--- Instructions go here, with proper comments
+;-- Instructions go here, with proper comments
  
-       lea    R1,1[R0]         ; R1 = 1    line 88
-       lea    R2,2[R0]         ; R2 = 2
-       load   R3,n[R0]         ; R3 = n
-       load   R4,minus[R0]     ; R4 = -
-       load   R5,gt[R0]        ; R5 = >
-       load   R6,newline[R0]   ; R6 = /n
-       load   R7,star[R0]      ; R7 = *
-       load   R8,limit[R0]     ; R8 = limit
-       lea    R9,outbuf[R0]    ; R9 = addr for outbuf
-       lea    R10,0[R0]         ; R10 = 0 (i = 0)
-       sub    R3,R3,R1         ; R3 = R3 - R1 (R3 = n-1)
+       lea       R1,1[R0]         ; R1 = 1    line 88
+       lea       R2,2[R0]         ; R2 = 2
+       load      R3,n[R0]         ; R3 = n
+       load      R4,minus[R0]     ; R4 = -
+       load      R5,gt[R0]        ; R5 = >
+       load      R6,newline[R0]   ; R6 = /n
+       load      R7,star[R0]      ; R7 = *
+       load      R8,limit[R0]     ; R8 = limit
+       lea       R9,outbuf[R0]    ; R9 = addr for outbuf
+       lea       R10,0[R0]        ; R10 = 0 (i = 0)
+;       sub       R3,R3,R1         ; R3 = R3 - R1 (R3 = n-1)
   
-:top   cmpgt  R14,R10,R3        ; R14 = R10 > R3
-       jumpf  R14,end[R0]      ; Goto end if R14 is false
-       lea    R11,0[R0]        ; R11 = 0 (k = 0)
-       load   R12,x[R9]        ; R12 = x[R9] (R12 = x[i])
-       cmplt  R14,R12,R0       ; R14 = R12 > R0
-       jumpf  R14,else[R0]     ; Goto else if R14 is false
-       store  R6,outbuf[R11]   ; outbuf[R10] = R6 (outbuf[k] = *)
-       add    R11,R11,R1       ; R11 = R11 + R1 (k += 1)
-       jump   R0,print[R0]     ; Goto print
+top    cmp       R10,R3           ; R10 >= R3
+       jumpge    end[R0]          ; Goto end if true
+       lea       R11,0[R0]        ; R11 = 0 (k = 0)
+       load      R12,x[R10]       ; R12 = x[R9] (R12 = x[i])
+       cmp       R12,R0           ; R12 <= R0
+       jumpge    else[R0]         ; Goto else if true
+       store     R4,outbuf[R11]   ; outbuf[R10] = R4 (outbuf[k] = -)
+       add       R11,R11,R1       ; R11 = R11 + R1 (k += 1)
+       jump      print[R0]        ; Goto print
  
-:else  cmplt  R14,R11,R12      ; R14 = R11 < R12
-       cmplt  R13,R11,R8       ; R13 = R11 < R8
-       and    R14,R14,R13      ; R14 = R14 and R13
-       jumpf  R14,arrow[R0]    ; Goto arrow if R14 is false
-       store  R7,outbuf[R11]   ; outbuf[R10] = R7 (outbuf[k] = *)
-       add    R11,R11,R1       ; R11 = R11 + R1 (k += 1)
-       jump   R0,else[R0]      ; Goto else
+else   cmp       R11,R12          ; R11 >= R12
+       jumpge    arrow[R0]        ; Goto arrow if true
+       cmp       R11,R8           ; R11 >= R8
+       jumpge    arrow[R0]        ; Goto arrow if true
+       store     R7,outbuf[R11]   ; outbuf[R10] = R7 (outbuf[k] = *)
+       add       R11,R11,R1       ; R11 = R11 + R1 (k += 1)
+       jump      else[R0]         ; Goto else
 
-:arrow cmplt  R14,R11,R12      ; R14 = R11 < R12
-       jumpf  R14,print        ; Goto to print if R14 is false
-       store  R5,outbuf[R11]   ; outbuf[R11] = R5 (outbuf[k] = >)
-       add    R11,R11,R1       ; R11 = R11 + R1 (k += 1)
+arrow  cmp       R11,R12          ; R14 = R11 < R12
+       jumpge    print[R0]        ; Goto to print if R14 is false
+       store     R5,outbuf[R11]   ; outbuf[R11] = R5 (outbuf[k] = >)
+       add       R11,R11,R1       ; R11 = R11 + R1 (k += 1)
 
-:print store  R6,outbuf[R11]   ; outbuf[R11] = R6 (outbuf[k] = \n)
-       add    R11,R11,R1       ; R11 = R11 + R1 (k += 1)
-       trap   R2,R9,R11        ; Print outbuf
-       add    R10,R10,R1       ; R10 = R10 + R1 (i += 1)
-       jump   R0,top[R0]       ; Goto top
+print  store     R6,outbuf[R11]   ; outbuf[R11] = R6 (outbuf[k] = \n)
+       add       R11,R11,R1       ; R11 = R11 + R1 (k += 1)
+       trap      R2,R9,R11        ; Print outbuf
+       add       R10,R10,R1       ; R10 = R10 + R1 (i += 1)
+       jump      top[R0]          ; Goto top
 
-:end
-      trap R0,R0,R0
+end    trap      R0,R0,R0
 ;-----------------------------------------------------------------------
 ; Constants - initial values should not be changed
 
