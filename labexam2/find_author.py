@@ -101,7 +101,7 @@ def hapax_legomana_ratio(words):
     '''
     
     # To do: Replace this function's body to meet its specification.
-    return len(set(filter(lambda word: words.count(words) == 1, words))) / float(len(words))
+    return len(set(filter(lambda word: words.count(word) == 1, words))) / float(len(words))
               
     
 def average_sentence_length(sentences):
@@ -130,7 +130,7 @@ def avg_sentence_complexity(sentences):
 
     return reduce(lambda x,y: x+y, 
             map(lambda phrases: len(phrases),
-                map(lambda sent: re.split(patt, sent), sentences)))
+                map(lambda sent: re.split(patt, sent), sentences)))/float(len(sentences))
 
 
 def get_text_from_valid_file(prompt):
