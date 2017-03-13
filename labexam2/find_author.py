@@ -27,7 +27,7 @@ def get_words(text):
     # To do: Complete this function's body to meet its specification.   
     for line in text:
         for possible in line.split():
-            cleaned = clean_up(possible)
+            cleaned = clean_up(possible).strip()
             if len(cleaned) != 0:
                 words.append(cleaned)
 
@@ -60,7 +60,7 @@ def get_sentences(text):
     # Hint: convert text to a single long string
     all_text = []
     for line in text:
-        all_text.append(line)
+        all_text.append(line.strip())
     all_text = "".join(all_text)
 
     sentences = split_on_separators(all_text, "!?.")
@@ -77,7 +77,7 @@ def average_word_length(words):
     as returned by the get_words() function.
     '''
     # To do: Replace this function's body to meet its specification.
-
+    #Sum the length of every word and divide it by the total number of words
     return reduce(lambda x,y: x+y, 
             map(lambda word: len(word), words)) / float(len(words))
 
@@ -101,6 +101,7 @@ def hapax_legomana_ratio(words):
     '''
     
     # To do: Replace this function's body to meet its specification.
+    #Get the number of words which appear once, and divide it by the total number of words
     return len(set(filter(lambda word: words.count(word) == 1, words))) / float(len(words))
               
     
@@ -128,6 +129,7 @@ def avg_sentence_complexity(sentences):
     # To do: Replace this function's body to meet its specification.
     patt = re.compile("[:;,]")
 
+    #Split each sentence into a list of phrases. Sum the length of each list and divide by the number of sentences
     return reduce(lambda x,y: x+y, 
             map(lambda phrases: len(phrases),
                 map(lambda sent: re.split(patt, sent), sentences)))/float(len(sentences))
@@ -148,12 +150,18 @@ def get_text_from_valid_file(prompt):
     # To do: Complete this function's body to meet its specification.
     while True:
         try:
+
             with open(filename) as f:
                 text = f.readlines()
-            print len(text)
             break
         except IOError:
-            print "Could not open file!"
+	    if not os.path.exists(filename):
+	        print "File does not exist!"
+	    elif not os.path.isfile(filename):
+	        print "Not a file!"
+	    else:
+                print "Could not open file!"
+	    filename = raw_input(prompt)
 
     return text, filename
 
@@ -204,7 +212,6 @@ if __name__ == '__main__':
     
     words = get_words(text)
     sentences = get_sentences(text)
-    print len(sentences)
     
     # calculate the signature for the mystery file
     mystery_signature = []
