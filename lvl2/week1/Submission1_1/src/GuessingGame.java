@@ -12,6 +12,23 @@ public class GuessingGame {
 		int target = 1 + (int) (Math.random() * 20);
 
 		// Put your solution to Submission 1 here
+        int guessCount = 0;
+        boolean success = false;
+        while (!success) {
+        	System.out.println("Enter your guess:");
+        	byte guess = stdin.nextByte();
+        	guessCount++;
+        	if (guess > target) {
+        	    System.out.println("Too high!");
+            } else if (guess < target) {
+        	    System.out.println("Too low!");
+            } else {
+        	    System.out.println("Just right!");
+        	    success = true;
+            }
+		}
+
+		System.out.println("You took " + guessCount + " guesses.");
 
 		stdin.close();
 	}
