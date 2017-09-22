@@ -5,6 +5,7 @@
  *
  */
 
+@SuppressWarnings("Duplicates")
 public class GuessingGame {
 	public static void main(String[] args) {
 		// Initialise the scanner and choose the target value (a random number between 1 and 20)
@@ -16,7 +17,7 @@ public class GuessingGame {
         boolean success = false;
         while (!success) {
         	System.out.println("Enter your guess:");
-        	byte guess = stdin.nextByte();
+        	byte guess = stdin.nextByte(); // Use byte as all possible values for game fit
         	guessCount++;
         	if (guess > target) {
         	    System.out.println("Too high!");
