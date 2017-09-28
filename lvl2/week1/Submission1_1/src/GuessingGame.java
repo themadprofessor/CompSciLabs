@@ -2,6 +2,7 @@
  * Starter code for JP2 Laboratory 1, Submission 1.
  * 
  * @author Mary Ellen Foster <MaryEllen.Foster@glasgow.ac.uk>
+ * @author 2258082R Stuart Reilly
  *
  */
 
