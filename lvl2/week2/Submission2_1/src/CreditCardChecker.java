@@ -1,5 +1,8 @@
 import java.util.stream.IntStream;
 
+/**
+ * @author 2258082R Stuart Reilly
+ */
 public class CreditCardChecker {
 
     public static void main(String[] args) {
@@ -24,7 +27,7 @@ public class CreditCardChecker {
         }
 
         int sum = 0;
-        //Reverse iteration as the check digit use Luhn Algorithm
+        //Reverse iteration as the check digit uses Luhn Algorithm
         for (int i = cardNum.length()-1; i > -1; i--) {
             char c = cardNum.charAt(i);
             if (Character.isDigit(c)) {
