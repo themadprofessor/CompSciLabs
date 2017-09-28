@@ -2,29 +2,29 @@ import java.util.stream.IntStream;
 
 public class CreditCardChecker {
 
-	public static void main(String[] args) {
-		
-		java.util.Scanner stdin = new java.util.Scanner(System.in);
-		System.out.println("Enter the credit card number: ");
-		String creditCard = stdin.next();
+    public static void main(String[] args) {
 
-        // Enter your code here
+        java.util.Scanner stdin = new java.util.Scanner(System.in);
+        System.out.println("Enter the credit card number: ");
+        String creditCard = stdin.next();
+
         String cardNum = creditCard.trim();
-		CardType cardType = CardType.fromString(cardNum);
-		if (cardType == CardType.UNKNOWN) {
+        //Check card type, exiting if invalid
+        CardType cardType = CardType.fromString(cardNum);
+        if (cardType == CardType.UNKNOWN) {
             System.err.println("Unknown card type");
             System.exit(-2);
         }
 
         System.out.println("Card type: " + cardType.toString());
-		//Check if the length of the credit card number is valid for its card type
-		if (cardType.possibleLens().noneMatch(len -> len == cardNum.length())) {
+        //Check if the length of the credit card number is valid for its card type
+        if (cardType.possibleLens().noneMatch(len -> len == cardNum.length())) {
             System.err.println("Invalid length");
             System.exit(-3);
         }
 
-		int sum = 0;
-		//Reverse iteration as the check digit use Luhn Algorithm
+        int sum = 0;
+        //Reverse iteration as the check digit use Luhn Algorithm
         for (int i = cardNum.length()-1; i > -1; i--) {
             char c = cardNum.charAt(i);
             if (Character.isDigit(c)) {
@@ -49,8 +49,8 @@ public class CreditCardChecker {
             System.err.println("Card number is INVALID");
         }
 
-		stdin.close();
-	}
+        stdin.close();
+    }
 }
 
 enum CardType {
