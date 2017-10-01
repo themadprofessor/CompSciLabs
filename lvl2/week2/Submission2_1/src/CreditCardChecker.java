@@ -11,9 +11,8 @@ public class CreditCardChecker {
         System.out.println("Enter the credit card number: ");
         String creditCard = stdin.next();
 
-        String cardNum = creditCard.trim();
         //Check card type, exiting if invalid
-        CardType cardType = CardType.fromString(cardNum);
+        CardType cardType = CardType.fromString(creditCard);
         if (cardType == CardType.UNKNOWN) {
             System.err.println("Unknown card type");
             System.exit(-2);
@@ -21,19 +20,19 @@ public class CreditCardChecker {
 
         System.out.println("Card type: " + cardType.toString());
         //Check if the length of the credit card number is valid for its card type
-        if (cardType.possibleLens().noneMatch(len -> len == cardNum.length())) {
+        if (cardType.possibleLens().noneMatch(len -> len == creditCard.length())) {
             System.err.println("Invalid length");
             System.exit(-3);
         }
 
         int sum = 0;
         //Reverse iteration as the check digit uses Luhn Algorithm
-        for (int i = cardNum.length()-1; i > -1; i--) {
-            char c = cardNum.charAt(i);
+        for (int i = creditCard.length()-1; i > -1; i--) {
+            char c = creditCard.charAt(i);
             if (Character.isDigit(c)) {
                 int num = Character.getNumericValue(c);
                 // Check if the current digit is an even distance from the end of the string
-                if ((cardNum.length() - i) % 2 == 0) {
+                if ((creditCard.length() - i) % 2 == 0) {
                     num *= 2;
                     if (num > 9) {
                         num -= 9;
@@ -101,7 +100,7 @@ enum CardType {
      *     <li>MASTERCARD - [16]</li>
      *     <li>UNKNOWN - [-1]</li>
      * </ul>
-     * @return
+     * @return Stream of possible card number lengths
      */
     public IntStream possibleLens() {
         return IntStream.of(this.possibleLens);

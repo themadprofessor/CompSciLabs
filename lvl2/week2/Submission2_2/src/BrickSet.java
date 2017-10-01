@@ -5,7 +5,7 @@
  */
 public class BrickSet {
     private int setNumber;
-    private String Name;
+    private String name;
     private String theme;
     private int pieceCount;
     private int price;
@@ -20,7 +20,7 @@ public class BrickSet {
      */
     public BrickSet(int setNumber, String name, String theme, int pieceCount, int price) {
         this.setNumber = setNumber;
-        Name = name;
+        this.name = name;
         this.theme = theme;
         this.pieceCount = pieceCount;
         this.price = price;
@@ -47,7 +47,7 @@ public class BrickSet {
      * @return Name of set
      */
     public String getName() {
-        return Name;
+        return name;
     }
 
     /**
