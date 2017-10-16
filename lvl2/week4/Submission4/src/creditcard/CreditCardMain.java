@@ -4,7 +4,15 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * Asks the user for a credit card number and checks if it is a valid credit card number
+ * @author 2258082R Stuart Reilly
+ */
 public class CreditCardMain {
+	/**
+	 * Runs the program
+	 * @param args command line arguments - ignored
+	 */
     public static void main(String[] args) {
         //Initialise stdin and checker
         Scanner input = new Scanner(System.in);

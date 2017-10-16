@@ -6,13 +6,23 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
+ * Checks if credit card numbers are valid.
  * @author 2258082R Stuart Reilly
  */
 @SuppressWarnings("Duplicates")
 public class CreditCardChecker {
 
+	/**
+	 * Validates the given credit card number. This method is fail-fast, meaning it will throw the specified exceptions before any processing
+	 * is carried out.
+	 * @param creditCard credit card number to check
+	 * @return Return true if the given credit card number is valid, false otherwise
+	 * @throws IllegalCardFormatException Thrown if the given credit card number contains any non-digit characters (as defined by 
+	 * <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html#isDigit-char-">Character.isDigit</a>)
+	 * @throws IllegalCardLengthException Thrown if the given credit card number is not the correct length for its type
+	 */
     public boolean validate(String creditCard) throws IllegalCardFormatException, IllegalCardLengthException {
-        //Ensure the card number length is possibly valid, throwing an expection if it is not
+        //Ensure the card number length is possibly valid, throwing an exception if it is not
         if (creditCard.length() > 19 || creditCard.length() < 13) {
             throw new IllegalCardLengthException("must be between 13 and 19 characters");
         }
