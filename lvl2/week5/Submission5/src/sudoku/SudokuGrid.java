@@ -17,16 +17,12 @@ public class SudokuGrid {
      * @throws IOException Thrown if an IO error occurs during reading
      */
     public SudokuGrid(String filename) throws IOException {
-        String[] rawData = Utils.loadGrid(filename).split(",");
-
-        //Expand rawData to Utils.SIZE*Utils.SIZE to avoid ArrayOutOfBounds
-        String[] data = new String[Utils.SIZE * Utils.SIZE];
-        System.arraycopy(rawData, 0, data, 0, rawData.length);
+        String[] rawData = Utils.loadGrid(filename).split(",", 81);
 
         //Iterate over each cell, converting it into a number and store it in a 1D array
-        int[] flatGrid = Arrays.stream(data)
+        int[] flatGrid = Arrays.stream(rawData)
                 .map(s -> {
-                    if (s == null || s.isEmpty()) {
+                    if (/*s == null || */s.isEmpty()) {
                         return "0";
                     } else {
                         return s;
