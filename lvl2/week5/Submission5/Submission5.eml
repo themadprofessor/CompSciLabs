@@ -2,4 +2,8 @@
 <component inheritJdk="true">
 	<exclude-output/>
 	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="hamcrest" scope="TEST"/>
+	<levels>
+		<level name="hamcrest" value="project"/>
+	</levels>
 </component>
