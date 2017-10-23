@@ -18,16 +18,9 @@ public class SudokuGrid {
      */
     public SudokuGrid(String filename) throws IOException {
         String[] rawData = Utils.loadGrid(filename).split(",", 81);
-
         //Iterate over each cell, converting it into a number and store it in a 1D array
         int[] flatGrid = Arrays.stream(rawData)
-                .map(s -> {
-                    if (/*s == null || */s.isEmpty()) {
-                        return "0";
-                    } else {
-                        return s;
-                    }
-                })
+                .map(s -> s.isEmpty() ? "0" : s)
                 .mapToInt(c -> Character.getNumericValue(c.charAt(0)))
                 .toArray();
         //Copy Utils.SIZE blocks of Utils.SIZE elements into each row of grid
@@ -98,8 +91,10 @@ public class SudokuGrid {
         Map<Integer, Long> counts = new HashMap<>();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
+            	//Get the ij th set of the x,y cell
                 int cell = grid[x * 3 + i][y * 3 + j];
                 if (cell != 0) {
+                	//If cell is in counts.keys(), increment its value, otherwise add cell and set its value to 1
                     counts.merge(cell, 1L, (old, newVal) -> old + newVal);
                 }
             }
@@ -126,7 +121,9 @@ public class SudokuGrid {
      * @return Returns true if the line contains no duplicate values, and false otherwise
      */
     private boolean isValidLine(Stream<Integer> line) {
+    	//Map the unique values in the line to the number of occurences of the value
         Map<Integer, Long> counts = line.collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+        //Return false if any non-zero value appears more than once
         return counts.entrySet()
                         .stream()
                         .filter(entry -> entry.getKey() != 0L)
