@@ -1,5 +1,6 @@
 package wishlist;
 
+import java.io.Serializable;
 import java.util.Currency;
 import java.util.Objects;
 
@@ -8,7 +9,9 @@ import java.util.Objects;
  * 
  * @author Mary Ellen Foster
  */
-public class BrickSet {
+public class BrickSet implements Comparable<BrickSet>, Serializable {
+	private static final long serialVersionUID = 123L;
+
 	/** Fields */
 	private int setNumber;
 	private String name;
@@ -83,5 +86,10 @@ public class BrickSet {
 	public String toString() {
 		return this.setNumber + ": " + this.name + " (" + this.theme + ") " + this.numPieces + "pcs " 
 			+ Currency.getInstance("GBP").getSymbol() + this.retailPrice;
+	}
+
+	@Override
+	public int compareTo(BrickSet set) {
+		return getSetNumber() - set.getSetNumber();
 	}
 }
