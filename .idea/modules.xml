@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/CompSciLabs.iml" filepath="$PROJECT_DIR$/.idea/CompSciLabs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lvl2/week1/FirstProgram/FirstProgram.iml" filepath="$PROJECT_DIR$/lvl2/week1/FirstProgram/FirstProgram.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lvl2/week1/Primes/Primes.iml" filepath="$PROJECT_DIR$/lvl2/week1/Primes/Primes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lvl2/week1/Submission1_1/Submission1_1.iml" filepath="$PROJECT_DIR$/lvl2/week1/Submission1_1/Submission1_1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lvl2/week1/Submission1_2/Submission1_2.iml" filepath="$PROJECT_DIR$/lvl2/week1/Submission1_2/Submission1_2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lvl2/week2/Submission2_1/Submission2_1.iml" filepath="$PROJECT_DIR$/lvl2/week2/Submission2_1/Submission2_1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lvl2/week2/Submission2_2/Submission2_2.iml" filepath="$PROJECT_DIR$/lvl2/week2/Submission2_2/Submission2_2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lvl2/week3/Submission3/Submission3.iml" filepath="$PROJECT_DIR$/lvl2/week3/Submission3/Submission3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lvl2/week4/Submission4/Submission4.iml" filepath="$PROJECT_DIR$/lvl2/week4/Submission4/Submission4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lvl2/week5/Submission5/Submission5.iml" filepath="$PROJECT_DIR$/lvl2/week5/Submission5/Submission5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lvl2/week6/Submission6/Submission6.iml" filepath="$PROJECT_DIR$/lvl2/week6/Submission6/Submission6.iml" />
+    </modules>
+  </component>
+</project>
