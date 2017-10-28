@@ -21,7 +21,7 @@ public class WishList implements Serializable {
      * @return An ordered, unmodifiableCollection of BrickSets
      */
     public Collection<BrickSet> getSets() {
-        return Collections.unmodifiableCollection(sets);
+        return Collections.unmodifiableSortedSet(sets);
     }
 
     /**
