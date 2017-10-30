@@ -21,7 +21,7 @@ public class WishList implements Serializable {
      * @return An ordered, unmodifiableCollection of BrickSets
      */
     public Collection<BrickSet> getSets() {
-        return Collections.unmodifiableCollection(sets);
+        return Collections.unmodifiableSortedSet(sets);
     }
 
     /**
@@ -61,11 +61,9 @@ public class WishList implements Serializable {
      * @return The WishList in the given file
      * @throws IOException Thrown if an IO error occurs during reading or the file contains an object which is not defined
      */
-    public static WishList loadFromFile(String filename) throws IOException {
+    public static WishList loadFromFile(String filename) throws IOException, ClassNotFoundException {
         try(ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename))))  {
             return (WishList) in.readObject();
-        } catch (ClassNotFoundException e) {
-            throw new IOException("Failed to find class file! " + e.getLocalizedMessage());
         }
     }
 
