@@ -59,7 +59,8 @@ public class WishList implements Serializable {
      * <a href="https://docs.oracle.com/javase/8/docs/platform/serialization/spec/input.html">Java's Object Serialization Specification</a>.
      * @param filename The file to read from
      * @return The WishList in the given file
-     * @throws IOException Thrown if an IO error occurs during reading or the file contains an object which is not defined
+     * @throws IOException Thrown if an IO error occurs during reading
+     * @throws ClassNotFoundException Thrown if the class required to define the object in the file is not defined
      */
     public static WishList loadFromFile(String filename) throws IOException, ClassNotFoundException {
         try(ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename))))  {
