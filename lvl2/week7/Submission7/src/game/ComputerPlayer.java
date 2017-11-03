@@ -19,9 +19,16 @@ public class ComputerPlayer extends GamePlayer {
         Map<Symbol, Long> counts = opponentHistory.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
-        return counts.entrySet()
+        return Symbol.getBeatMap()
+                .entrySet()
                 .stream()
-                .sorted(Comparator.comparingLong(Map.Entry::getValue))
+                .filter(entry -> entry.getValue()
+                        .contains(counts.entrySet()
+                                .stream()
+                                .sorted(Comparator.comparingLong(Map.Entry::getValue))
+                                .findFirst()
+                                .get()
+                                .getKey()))
                 .findFirst()
                 .get()
                 .getKey();

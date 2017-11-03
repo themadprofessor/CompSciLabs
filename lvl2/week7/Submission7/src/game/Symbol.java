@@ -12,7 +12,7 @@ public enum Symbol {
     private static Map<Symbol, EnumSet<Symbol>> BEAT_MAP = new EnumMap<>(Symbol.class);
 
     static {
-        BEAT_MAP.put(ROCK, EnumSet.of(LIZARD, SPOCK));
+        BEAT_MAP.put(ROCK, EnumSet.of(LIZARD, SCISSORS));
         BEAT_MAP.put(PAPER, EnumSet.of(ROCK, SPOCK));
         BEAT_MAP.put(SCISSORS, EnumSet.of(PAPER, LIZARD));
         BEAT_MAP.put(LIZARD, EnumSet.of(SPOCK, PAPER));
@@ -24,9 +24,13 @@ public enum Symbol {
         if (this == other) {
             return GameResult.DRAW;
         } else if (BEAT_MAP.get(this).contains(other)) {
-            return GameResult.LOSE;
-        } else {
             return GameResult.WIN;
+        } else {
+            return GameResult.LOSE;
         }
+    }
+
+    public static Map<Symbol, Set<Symbol>> getBeatMap() {
+        return Collections.unmodifiableMap(BEAT_MAP);
     }
 }
