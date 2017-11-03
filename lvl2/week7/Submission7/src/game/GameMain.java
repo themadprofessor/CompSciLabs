@@ -8,6 +8,8 @@ import java.util.Scanner;
  * JP2 Laboratory 7 2017.
  * 
  * @author mefoster
+ *
+ * @author Stuart Reilly 2258082
  */
 public class GameMain {
 
@@ -59,28 +61,35 @@ public class GameMain {
 
 	private static GamePlayer playTournament(GamePlayer player1, GamePlayer player2, int numGames) {
 	    int player1Wins = 0, player2Wins = 0;
+	    //Play until either player reaches numGames
 	    while (player1Wins != numGames && player2Wins != numGames) {
+	        //Get both player's symbols and print them
 			Symbol symbol1 = player1.chooseSymbol();
 			Symbol symbol2 = player2.chooseSymbol();
 			System.out.println(player1.name + ": " + symbol1);
 			System.out.println(player2.name + ": " + symbol2);
+
+			//Determine the winner, updating win counts accordingly
 			switch (symbol1.getResult(symbol2)) {
                 case WIN:
-                    System.out.println(player1.name + " wins!");
+                    System.out.println(player1.getName() + " wins!");
                     player1Wins++;
                     break;
                 case DRAW:
                     System.out.println("Draw");
                     break;
                 case LOSE:
-                    System.out.println(player2.name + " wins!");
+                    System.out.println(player2.getName() + " wins!");
                     player2Wins++;
                     break;
             }
 
+            //Update player histories
             player1.addHistory(symbol1, symbol2);
 			player2.addHistory(symbol2, symbol1);
 		}
+
+		//Return player1 if player1 won the most games, player2 otherwise
 		return player1Wins > player2Wins ? player1 : player2;
 	}
 }
