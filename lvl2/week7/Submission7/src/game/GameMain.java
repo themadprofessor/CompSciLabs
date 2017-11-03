@@ -58,7 +58,29 @@ public class GameMain {
 	}
 
 	private static GamePlayer playTournament(GamePlayer player1, GamePlayer player2, int numGames) {
-		// TODO put your code here (and remove this comment!!!)
-		return null;
+	    int player1Wins = 0, player2Wins = 0;
+	    while (player1Wins != numGames && player2Wins != numGames) {
+			Symbol symbol1 = player1.chooseSymbol();
+			Symbol symbol2 = player2.chooseSymbol();
+			System.out.println(player1.name + ": " + symbol1);
+			System.out.println(player2.name + ": " + symbol2);
+			switch (symbol1.getResult(symbol2)) {
+                case WIN:
+                    System.out.println(player1.name + " wins!");
+                    player1Wins++;
+                    break;
+                case DRAW:
+                    System.out.println("Draw");
+                    break;
+                case LOSE:
+                    System.out.println(player2.name + " wins!");
+                    player2Wins++;
+                    break;
+            }
+
+            player1.addHistory(symbol1, symbol2);
+			player2.addHistory(symbol2, symbol1);
+		}
+		return player1Wins > player2Wins ? player1 : player2;
 	}
 }
