@@ -2,6 +2,7 @@ package game;
 
 import java.util.Comparator;
 import java.util.Map;
+import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,8 @@ public class ComputerPlayer extends GamePlayer {
         //This is the only time there will not be a most frequent choice
         if (opponentHistory.size() == 0) {
             //The index is a value between 0 (inclusive) and the number of Symbols (exclusive)
-            return Symbol.values()[(int)(Math.random() * Symbol.values().length)];
+        	Random rand = new Random();
+        	return Symbol.values()[rand.nextInt(Symbol.values().length)];
         }
 
         //Create a map of each symbol and the number of times it appears in the opponent's history
