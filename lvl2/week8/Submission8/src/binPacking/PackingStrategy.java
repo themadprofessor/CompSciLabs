@@ -19,6 +19,7 @@ public class PackingStrategy {
         weights.stream()
                 .sorted(Comparator.reverseOrder())
                 .forEach(weight -> bins.stream()
+                        //Find the first bin with enough space, creating a new one if none are found, then add the weight
                         .filter(bin -> bin.getSpace() >= weight)
                         .findFirst()
                         .orElseGet(()-> addNewBin(capacity, bins))
@@ -47,39 +48,29 @@ public class PackingStrategy {
      * @return list of bins storing the weights
      */
     public static List<Bin> packBestFitParallel(List<Integer> allInts, int capacity, int numThreads) {
-        ExecutorService pool = Executors.newFixedThreadPool(numThreads);
-        Collection<Callable<List<Bin>>> tasks = new ArrayList<>();
-
+        Thread[] threads = new Thread[numThreads];
+        BinPackingProblem[] bins = new BinPackingProblem[numThreads];
         int offset = allInts.size()/numThreads;
-        for (int i = 0; i < numThreads; i++) {
-            List<Integer> sublist = allInts.subList(i*offset, (i+1)*offset);
-            tasks.add(() -> packBestFit(sublist, capacity));
-        }
-        try {
-            List<Bin> bins = pool.invokeAll(tasks)
-                    .stream()
-                    .map(PackingStrategy::getResult)
-                    .flatMap(Collection::stream)
-                    .collect(Collectors.toList());
-            pool.shutdown();
-            return bins;
-        } catch (InterruptedException e) {
-            System.err.println("Tasks were interrupted! " + e.getLocalizedMessage());
-            return null;
-        }
-    }
 
-    /**
-     * Waits for the given Future to finish, and return its value. If the Future throws an exception, return an empty
-     * list.
-     * @param future future to wait for
-     * @return list of bin produced by given future or an empty list if the future fails
-     */
-    private static List<Bin> getResult(Future<List<Bin>> future) {
-        try {
-            return future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            return Collections.emptyList();
+        for (int i = 0; i < threads.length; i++) {
+            BinPackingProblem bin = new BinPackingProblem(allInts.subList(i*offset, (i+1)*offset), capacity);
+            Thread thread = new Thread(bin);
+            thread.start();
+            threads[i] = thread;
+            bins[i] = bin;
         }
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //Iterate over all the resulting List<Bin>, and collect all the contents into a single 1D list
+        return Arrays.stream(bins)
+                .map(BinPackingProblem::getBins)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
     }
 }
