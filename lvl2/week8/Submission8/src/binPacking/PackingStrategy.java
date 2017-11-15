@@ -19,7 +19,9 @@ public class PackingStrategy {
         weights.stream()
                 .sorted(Comparator.reverseOrder())
                 .forEach(weight -> bins.stream()
-                        //Find the first bin with enough space, creating a new one if none are found, then add the weight
+                        //Find the most amount of space which can hold the weight, creating a new one if none are found,
+                        //then add the weight
+                        .sorted(Comparator.comparingInt(Bin::getSpace))
                         .filter(bin -> bin.getSpace() >= weight)
                         .findFirst()
                         .orElseGet(()-> addNewBin(capacity, bins))
