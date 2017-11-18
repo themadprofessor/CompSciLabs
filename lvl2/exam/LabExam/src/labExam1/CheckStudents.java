@@ -10,14 +10,15 @@ public class CheckStudents {
 
 	public static void main(String[] args) throws IOException {
 		// set up a Course object to contain the course data
+		String prefix = "lvl2/exam/LabExam";
 		String COURSEFILE = "course.txt";
-		List<String> courseLines = Files.readAllLines(Paths.get(COURSEFILE));
+		List<String> courseLines = Files.readAllLines(Paths.get(prefix, COURSEFILE));
 		Course course = new Course(courseLines);
 		System.out.println("The course description is: " + course);
 
 		// Load the student specifications
 		String STUDENTFILE = "students.txt";
-		List<String> studentLines = Files.readAllLines(Paths.get(STUDENTFILE));
+		List<String> studentLines = Files.readAllLines(Paths.get(prefix, STUDENTFILE));
 
 		// Load the students into a list
 		List<Student> students = new ArrayList<>();
