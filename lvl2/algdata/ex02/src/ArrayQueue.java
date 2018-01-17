@@ -9,47 +9,74 @@ public class ArrayQueue<E> {
     private int front;                      // index for the top of queue
     private int rear;                       // rear of the queue
     private int size;                       // size of the queue
-    
-	
+
+
     public ArrayQueue(){this(CAPACITY);}
 
     @SuppressWarnings("unchecked")
     public ArrayQueue(int capacity){
-	n = capacity;
-	Q = (E[]) new Object [n]; 
-	front = rear = size = 0;
+        n = capacity;
+        Q = (E[]) new Object [n];
+        front = rear = size = 0;
     }
     //
     // NOTE: java does not allow creation of array with parametrised type!
     //
-	
-    public int size(){return -999;}
-    //
-    // IMPLEMENT ME
-    //
-	 
-    public boolean isEmpty(){return false;}
+
+    public int size(){return size;}
     //
     // IMPLEMENT ME
     //
 
-    public E front() throws ArrayQueueException {return null;}
-    //
-    // IMPLEMENT ME
-    //
-	
-    public void enqueue(E element) throws ArrayQueueException {}
+    public boolean isEmpty(){return size == 0;}
     //
     // IMPLEMENT ME
     //
 
-    
-    public E dequeue() throws ArrayQueueException {return null;}
+    public E front() throws ArrayQueueException {
+        if (isEmpty()) {
+            throw new ArrayQueueException("queue is empty");
+        }
+        return Q[rear];
+    }
     //
     // IMPLEMENT ME
     //
-    
-    public String toString(){return "";}
+
+    public void enqueue(E element) throws ArrayQueueException {
+        if (size == n) {
+            throw new ArrayQueueException("queue is full");
+        }
+
+        size++;
+        Q[rear] = element;
+        rear = (rear + 1) % n;
+    }
+    //
+    // IMPLEMENT ME
+    //
+
+
+    public E dequeue() throws ArrayQueueException {
+        if (isEmpty()) {
+            throw new ArrayQueueException("queue is empty");
+        }
+        E element = Q[front];
+        front = (front + 1) % n;
+        size--;
+        return element;
+    }
+    //
+    // IMPLEMENT ME
+    //
+
+    public String toString(){
+        StringJoiner joiner = new StringJoiner(",", "[", "]");
+        for (int i = 0; i < size; i++) {
+            joiner.add(Q[(front + i) % n].toString());
+        }
+        return joiner.toString();
+    }
     //
     // IMPLEMENT ME
     //
