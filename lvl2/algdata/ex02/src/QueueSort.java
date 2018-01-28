@@ -26,7 +26,7 @@ public class QueueSort<E extends Comparable<E>> {
         while (!q1.isEmpty()) {
             el1 = q1.dequeue();
             while (!q2.isEmpty()) {
-                if (el2.compareTo(el1) < 0) {
+                if (el2.compareTo(el1) <= 0) {
                     newQueue.enqueue(el2);
                     el2 = q2.dequeue();
                 } else {
