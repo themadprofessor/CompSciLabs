@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc214163-d76f-4fd3-b8c9-84650cf54a0e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/metricstable.xlsx" afterPath="$PROJECT_DIR$/metricstable.xlsx" />
+      <change beforePath="$PROJECT_DIR$/../../wad/tango_with_django/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../wad/tango_with_django/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -13,111 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="JAVA/oose.vcs" pinned="false" current-in-tab="false">
-        <entry file="uml://JAVA/oose.vcs">
-          <provider selected="true" editor-type-id="UmlEditorProvider">
-            <state>
-              <ID>JAVA</ID>
-              <OriginalElement>oose.vcs</OriginalElement>
-              <nodes>
-                <node x="528.0" y="164.0">oose.vcs.Bus</node>
-                <node x="24.680555555555543" y="82.0">oose.vcs.RailedVehicle</node>
-                <node x="0.0" y="241.0">oose.vcs.Controller</node>
-                <node x="305.0" y="241.0">oose.vcs.Type</node>
-                <node x="156.0" y="241.0">oose.vcs.Direction</node>
-                <node x="224.68055555555551" y="82.0">oose.vcs.Watercraft</node>
-                <node x="237.75" y="0.0">oose.vcs.Vehicle</node>
-                <node x="720.0" y="164.0">oose.vcs.Car</node>
-                <node x="618.0" y="164.0">oose.vcs.Truck</node>
-                <node x="0.0" y="164.0">oose.vcs.Train</node>
-                <node x="293.0" y="164.0">oose.vcs.Boat</node>
-                <node x="546.0" y="82.0">oose.vcs.MotorVehicle</node>
-                <node x="99.0" y="164.0">oose.vcs.Tram</node>
-                <node x="199.0" y="164.0">oose.vcs.Ship</node>
-                <node x="428.0" y="241.0">oose.vcs.CFG</node>
-                <node x="390.0" y="164.0">oose.vcs.Motorcycle</node>
-              </nodes>
-              <notes />
-              <edges>
-                <edge source="oose.vcs.Truck" target="oose.vcs.MotorVehicle">
-                  <point x="0.0" y="-16.0" />
-                  <point x="659.0" y="144.0" />
-                  <point x="627.25" y="144.0" />
-                  <point x="16.25" y="16.0" />
-                </edge>
-                <edge source="oose.vcs.Bus" target="oose.vcs.MotorVehicle">
-                  <point x="0.0" y="-16.0" />
-                  <point x="563.0" y="144.0" />
-                  <point x="594.75" y="144.0" />
-                  <point x="-16.25" y="16.0" />
-                </edge>
-                <edge source="oose.vcs.MotorVehicle" target="oose.vcs.Vehicle">
-                  <point x="0.0" y="-16.0" />
-                  <point x="611.0" y="57.0" />
-                  <point x="314.4166666666667" y="57.0" />
-                  <point x="30.666666666666686" y="16.0" />
-                </edge>
-                <edge source="oose.vcs.Ship" target="oose.vcs.Watercraft">
-                  <point x="0.0" y="-16.0" />
-                  <point x="236.0" y="144.0" />
-                  <point x="253.43055555555551" y="144.0" />
-                  <point x="-28.75" y="16.0" />
-                </edge>
-                <edge source="oose.vcs.RailedVehicle" target="oose.vcs.Vehicle">
-                  <point x="0.0" y="-16.0" />
-                  <point x="89.18055555555554" y="57.0" />
-                  <point x="253.08333333333334" y="57.0" />
-                  <point x="-30.666666666666657" y="16.0" />
-                </edge>
-                <edge source="oose.vcs.Boat" target="oose.vcs.Watercraft">
-                  <point x="0.0" y="-16.0" />
-                  <point x="331.5" y="144.0" />
-                  <point x="310.93055555555554" y="144.0" />
-                  <point x="28.75" y="16.0" />
-                </edge>
-                <edge source="oose.vcs.Car" target="oose.vcs.MotorVehicle">
-                  <point x="0.0" y="-16.0" />
-                  <point x="754.5" y="134.0" />
-                  <point x="659.75" y="134.0" />
-                  <point x="48.75" y="16.0" />
-                </edge>
-                <edge source="oose.vcs.Motorcycle" target="oose.vcs.MotorVehicle">
-                  <point x="0.0" y="-16.0" />
-                  <point x="449.0" y="134.0" />
-                  <point x="562.25" y="134.0" />
-                  <point x="-48.75" y="16.0" />
-                </edge>
-                <edge source="oose.vcs.Watercraft" target="oose.vcs.Vehicle">
-                  <point x="0.0" y="-16.0" />
-                  <point x="282.18055555555554" y="57.0" />
-                  <point x="283.75" y="57.0" />
-                  <point x="0.0" y="16.0" />
-                </edge>
-                <edge source="oose.vcs.Tram" target="oose.vcs.RailedVehicle">
-                  <point x="0.0" y="-16.0" />
-                  <point x="139.0" y="144.0" />
-                  <point x="121.43055555555554" y="144.0" />
-                  <point x="32.25" y="16.0" />
-                </edge>
-                <edge source="oose.vcs.Train" target="oose.vcs.RailedVehicle">
-                  <point x="0.0" y="-16.0" />
-                  <point x="39.5" y="144.0" />
-                  <point x="56.93055555555554" y="144.0" />
-                  <point x="-32.25" y="16.0" />
-                </edge>
-              </edges>
-              <settings layout="Hierarchic Group" zoom="1.0" x="-153.5" y="-63.0" />
-              <SelectedNodes>
-                <node>oose.vcs.CFG</node>
-              </SelectedNodes>
-              <Categories />
-              <SCOPE>All</SCOPE>
-              <VISIBILITY>private</VISIBILITY>
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="Boat.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/oose/vcs/Boat.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -171,9 +67,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="3840" />
     <option name="y" value="-1" />
     <option name="width" value="1920" />
-    <option name="height" value="1059" />
+    <option name="height" value="1060" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -191,10 +88,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -217,6 +110,10 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -327,6 +224,11 @@
       <predefined_log_file id="idea.log" enabled="true" />
     </configuration>
   </component>
+  <component name="SbtLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
@@ -341,6 +243,7 @@
       <option name="presentableId" value="Default" />
       <updated>1516015834402</updated>
       <workItem from="1516015837612" duration="744000" />
+      <workItem from="1517144227768" duration="9000" />
     </task>
     <task id="LOCAL-00001" summary="Move vcs into correct package">
       <created>1516016253419</created>
@@ -353,32 +256,32 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="744000" />
+    <option name="totallyTimeSpent" value="753000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-1" width="1920" height="1059" extended-state="0" />
+    <frame x="3840" y="-1" width="1920" height="1060" extended-state="0" />
     <layout>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Cargo" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15721925" sideWeight="0.5" order="-1" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Cargo" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15882353" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -396,6 +299,30 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/oose/vcs/Boat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/oose/vcs/Watercraft.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/oose/vcs/Ship.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="uml://MODULES/mdl-vcs">
       <provider selected="true" editor-type-id="UmlEditorProvider">
         <state>
@@ -409,6 +336,7 @@
           <settings layout="Hierarchic Group" zoom="1.0" x="53.0" y="16.0" />
           <SelectedNodes />
           <Categories />
+          <SCOPE>All</SCOPE>
         </state>
       </provider>
     </entry>
@@ -422,7 +350,7 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="38.5" y="16.0" />
+          <settings layout="Hierarchic Group" zoom="1.0" x="39.0" y="16.0" />
           <SelectedNodes />
           <Categories />
           <SCOPE>All</SCOPE>
@@ -441,7 +369,7 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="234.5" y="208.5" />
+          <settings layout="Hierarchic Group" zoom="1.0" x="235.0" y="209.0" />
           <SelectedNodes />
           <Categories />
           <SCOPE>All</SCOPE>
@@ -557,7 +485,7 @@
               <point x="-32.25" y="16.0" />
             </edge>
           </edges>
-          <settings layout="Hierarchic Group" zoom="1.0" x="-153.5" y="-63.0" />
+          <settings layout="Hierarchic Group" zoom="1.0" x="-153.0" y="-63.0" />
           <SelectedNodes>
             <node>oose.vcs.CFG</node>
           </SelectedNodes>

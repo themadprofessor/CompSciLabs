@@ -1,0 +1,1 @@
+dot -Tpdf -o configStart.pdf configStart.dot && dot -Tpdf -o configAccelerate.pdf configAccelerate.dot && dot -Tpdf -o initVehicle.pdf initVehicle.dot && dot -Tpdf -o sim.pdf sim.dot && pdflatex 2258082R.tex

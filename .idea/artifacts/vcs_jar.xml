@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="vcs:jar">
+    <output-path>$PROJECT_DIR$/out/vcs</output-path>
+    <root id="archive" name="vcs.jar">
+      <element id="module-output" name="vcs" />
+    </root>
+  </artifact>
+</component>
