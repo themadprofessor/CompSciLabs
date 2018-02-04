@@ -1,0 +1,28 @@
+%%
+%% Author: stuart
+%% 04/02/18
+%%
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{a4wide}
+
+% Document
+\begin{document}
+    \author{Stuart Reilly - 2258082R}
+    \date{\today}
+    \title{OOSE Workshop 2 - Debugging Software Artifacts}
+    \maketitle
+
+    \subsection*{Soudness of SpotBugs}
+    SpotBugs is an unsound tool.
+    For example, it failed to register the variable 'start' on line 22 is never used.
+    Also, it failed to notice the BufferedReader 'reader' is not closed in a finally block, so the BufferedReader wouldn't be closed if the read call threw an exception.
+    The if statement on line 35 should have raised a bug as the variables 'swap' and 1 should be compared directly as ints rather than converted into Strings.
+
+    \subsection*{Precisness of SpotBugs}
+    SpotBugs is a precise tool as there are no false positives raised by the tool.
+
+\end{document}
