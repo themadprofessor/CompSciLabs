@@ -9,9 +9,7 @@ package ads2.cw1;
  */
 import ads2.cw1.Cache;
 
-import java.util.Stack;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 class FullyAssocLiFoCache implements Cache {
 
@@ -26,18 +24,18 @@ class FullyAssocLiFoCache implements Cache {
     // "Last Used" means accessed for either read or write
     // The helper functions below contain all needed assignments to last_used_loc so I recommend you use these.
 
-    private int last_used_loc
+    private int last_used_loc;
     // WV: Your other data structures here
     // Hint: You need 4 data structures
     // - One for the cache storage
-    private ... cache_storage;    
+    private int[] cache_storage;
     // - One to manage locations in the cache
-    private ... location_stack;    
+    private Deque<Integer> location_stack;
     // And because the cache is Fully Associative:
     // - One to translate between memory addresses and cache locations
-    private ... address_to_cache_loc;
+    private Map<Integer, Integer> address_to_cache_loc;
     // - One to translate between cache locations and memory addresses  
-    private ... cache_loc_to_address;
+    private Map<Integer, Integer> cache_loc_to_address;
     
 
 
@@ -51,13 +49,24 @@ class FullyAssocLiFoCache implements Cache {
 
         last_used_loc = CACHE_SZ/CACHELINE_SZ - 1;
         // WV: Your initialisations here
-       
+        cache_storage = new int[cacheSize];
+        location_stack = new ArrayDeque<>(cacheSize/cacheLineSize);
+        address_to_cache_loc = new HashMap<>();
+        cache_loc_to_address = new HashMap<>();
+
+        if (VERBOSE) {
+            System.out.println("Initialised Cache");
+        }
     }
 
     public void flush(int[] ram, Status status) {
         if (VERBOSE) System.out.println("Flushing cache");
         // WV: Your other data structures here
-
+        //TODO: Impl write back
+        cache_storage = new int[cache_storage.length];
+        location_stack.clear();
+        address_to_cache_loc.clear();
+        cache_loc_to_address.clear();
         status.setFlushed(true);
     }
 
@@ -94,6 +103,13 @@ class FullyAssocLiFoCache implements Cache {
         // If the data is not yet in the cache (read miss),fetch it from the DRAM
         // Get the data from the cache
          // ...
+        int data = 0;
+        if (!address_in_cache_line(address)) {
+            status.setHitOrMiss(false);
+            read_from_mem_on_miss(ram, address);
+        }
+
+        data = cache_storage[address_to_cache_loc.get(address) + cache_entry_position(address)];
 
         status.setData(data);
         return data;
@@ -119,7 +135,7 @@ class FullyAssocLiFoCache implements Cache {
          // ...
 
         last_used_loc=loc;
-       }
+    }
 
     // When we fetch a cache entry, we also update the last used location
     private int fetch_cache_entry(int address){
@@ -127,7 +143,14 @@ class FullyAssocLiFoCache implements Cache {
         int loc;
          // Your code here
          // ...
+        loc = cache_line_address(address);
+        cache_line = new int[CACHELINE_SZ];
+        System.arraycopy(cache_storage, loc, cache_line, 0, cache_line.length);
+
+        location_stack.remove(loc);
+        location_stack.push(loc);
         last_used_loc=loc;
+
         return cache_line[cache_line_address(address)];
     }
 
@@ -148,7 +171,7 @@ class FullyAssocLiFoCache implements Cache {
     private boolean cache_is_full(){
          // Your code here
          // ...
-        
+        return location_stack.size() >= CACHE_SZ/CACHELINE_SZ;
     }
 
     // When evicting a cache line, write its contents back to main memory
@@ -169,7 +192,7 @@ class FullyAssocLiFoCache implements Cache {
     private boolean address_in_cache_line(int address) {
         // Your code here
          // ...
-        
+       return address_to_cache_loc.containsKey(address);
     }
 
     // Given a main memory address, return the corresponding cache line address
