@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="w2customreader:jar">
-    <output-path>$PROJECT_DIR$/out/w2customreader_jar</output-path>
+    <output-path>$PROJECT_DIR$/out/artifacts/w2customreader_jar</output-path>
     <root id="archive" name="w2customreader.jar">
       <element id="module-output" name="w2customreader" />
     </root>
