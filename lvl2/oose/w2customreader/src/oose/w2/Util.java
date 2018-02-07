@@ -31,7 +31,7 @@ public class Util {
 		} catch(IOException e) {
 		    e.printStackTrace();
 		}
-		for(int i = 1; i <= buffer.length; i += 2) {
+		for(int i = 1; i < buffer.length; i += 2) {
 			buffer[i] = ' ';
 		}
 		System.out.print(buffer);
