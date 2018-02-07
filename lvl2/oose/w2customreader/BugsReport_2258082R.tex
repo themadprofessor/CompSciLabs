@@ -23,6 +23,9 @@
     The if statement on line 35 should have raised a bug as the variables 'swap' and 1 should be compared directly as ints rather than converted into Strings.
 
     \subsection*{Precisness of SpotBugs}
-    SpotBugs is a precise tool as there are no false positives raised by the tool.
+    SpotBugs is an imprecise tool as it raises a bug report for not checking the return value from BufferedReader's 'read' call.
+    This is not a bug as the call throws an IOException if anything noteworthy occurs.
+    It returns -1 when the underlying stream is finished or the number of characters read by the call.
+    BufferedReader will repeatedly read from the underlying stream until the given buffer is full so checking for the number of characters read is not needed.
 
 \end{document}
