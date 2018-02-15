@@ -70,11 +70,17 @@ class FullyAssocLiFoCache implements Cache {
     public void flush(int[] ram, Status status) {
         if (VERBOSE) System.out.println("Flushing cache");
         // WV: Your other data structures here
-        //TODO: Impl write back
+        address_to_cache_loc.forEach((addr, loc) ->
+                System.arraycopy(cache_storage[loc], 0, ram, cache_line_start_mem_address(addr), CACHELINE_SZ));
         cache_storage = new int[cache_storage.length][CACHELINE_SZ];
         location_stack.clear();
         address_to_cache_loc.clear();
         cache_loc_to_address.clear();
+
+        //Populate location stack with all locations
+        for (int i = 0; i < cache_storage.length; i++) {
+            location_stack.push(i);
+        }
         status.setFlushed(true);
     }
 
@@ -101,7 +107,7 @@ class FullyAssocLiFoCache implements Cache {
         status.setHitOrMiss(true);
         if (!address_in_cache_line(address)) {
             status.setHitOrMiss(false);
-            read_from_mem_on_miss(ram, address);
+            read_from_mem_on_miss_wrapper(ram, address, status);
         }
         update_cache_entry(address, data);
         status.setFreeLocations(location_stack.size());
@@ -120,8 +126,7 @@ class FullyAssocLiFoCache implements Cache {
         int data = 0;
         if (!address_in_cache_line(address)) {
             status.setHitOrMiss(false);
-            status.setEvicted(true);
-            read_from_mem_on_miss(ram, address);
+            read_from_mem_on_miss_wrapper(ram, address, status);
         }
 
         data = fetch_cache_entry(address);
@@ -129,6 +134,17 @@ class FullyAssocLiFoCache implements Cache {
         status.setFreeLocations(location_stack.size());
         status.setData(data);
         return data;
+    }
+
+    //Ensure the location stack has a value and update status
+    private void read_from_mem_on_miss_wrapper(int[] ram, int address, Status status) {
+        if (cache_is_full()) {
+            status.setEvicted(true);
+            status.setEvictedCacheLoc(last_used_loc);
+            status.setEvictedCacheLineAddr(cache_loc_to_address.get(last_used_loc));
+            write_to_mem_on_evict(ram, last_used_loc);
+        }
+        read_from_mem_on_miss(ram, address);
     }
 
     // You might want to use the following methods as helpers
@@ -143,15 +159,10 @@ class FullyAssocLiFoCache implements Cache {
         int start_addr = cache_line_start_mem_address(cache_line_address(address));
         loc = get_next_free_location();
 
-        if (loc == -1) {
-            write_to_mem_on_evict(ram, last_used_loc);
-            loc = get_next_free_location();
-        }
-
         System.arraycopy(ram, start_addr, cache_line, 0, CACHELINE_SZ);
         cache_storage[loc] = cache_line;
         address_to_cache_loc.put(cache_line_address(address), loc);
-        cache_loc_to_address.put(loc, start_addr);
+        cache_loc_to_address.put(loc, cache_line_address(address));
 
         last_used_loc=loc;
    }
@@ -218,7 +229,7 @@ class FullyAssocLiFoCache implements Cache {
         if (VERBOSE) System.out.println("Cache line to RAM: ");
         // Your code here
          // ...
-        evicted_cl_address = cache_loc_to_address.get(loc);
+        evicted_cl_address = cache_line_start_mem_address(cache_loc_to_address.get(loc));
         cache_line = cache_storage[loc];
         System.arraycopy(cache_line, 0, ram, evicted_cl_address, CACHELINE_SZ);
 

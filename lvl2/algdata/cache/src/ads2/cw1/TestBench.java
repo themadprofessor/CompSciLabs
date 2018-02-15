@@ -20,6 +20,7 @@ package ads2.cw1;
 import ads2.cw1.Memory;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 class TestBench {
 
