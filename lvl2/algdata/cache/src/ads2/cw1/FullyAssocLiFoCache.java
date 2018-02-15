@@ -90,7 +90,7 @@ class FullyAssocLiFoCache implements Cache {
         // The cache policy is write-back, so the writes are always to the cache. 
         // The update policy is write allocate: on a write miss, a cache line is loaded to cache, followed by a write operation. 
          // ...
-
+        if (location_stack.contains(cace))
     }
         
     private int read_data_from_cache(int[] ram,int address, Status status){
@@ -165,7 +165,9 @@ class FullyAssocLiFoCache implements Cache {
     private void evict_location(int loc){
          // Your code here
          // ...
-        
+        if (VERBOSE) {
+            System.out.println("Evicted: " + loc);
+        }
     }
 
     private boolean cache_is_full(){
@@ -192,7 +194,7 @@ class FullyAssocLiFoCache implements Cache {
     private boolean address_in_cache_line(int address) {
         // Your code here
          // ...
-       return address_to_cache_loc.containsKey(address);
+       return address_to_cache_loc.containsKey(cache_line_address(address));
     }
 
     // Given a main memory address, return the corresponding cache line address
