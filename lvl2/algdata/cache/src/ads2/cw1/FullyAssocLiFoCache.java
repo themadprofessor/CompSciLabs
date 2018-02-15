@@ -7,13 +7,14 @@ package ads2.cw1;
  * You must implement/complete all these methods
  * You are allow to create helper methods to do this, put them at the end of the class 
  */
-import ads2.cw1.Cache;
-
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
 
 class FullyAssocLiFoCache implements Cache {
 
-    final private static boolean VERBOSE = false;
+    final private static boolean VERBOSE = true;
 
     final private int CACHE_SZ;
     final private int CACHELINE_SZ;
@@ -28,7 +29,7 @@ class FullyAssocLiFoCache implements Cache {
     // WV: Your other data structures here
     // Hint: You need 4 data structures
     // - One for the cache storage
-    private int[] cache_storage;
+    private int[][] cache_storage;
     // - One to manage locations in the cache
     private Deque<Integer> location_stack;
     // And because the cache is Fully Associative:
@@ -49,13 +50,20 @@ class FullyAssocLiFoCache implements Cache {
 
         last_used_loc = CACHE_SZ/CACHELINE_SZ - 1;
         // WV: Your initialisations here
-        cache_storage = new int[cacheSize];
-        location_stack = new ArrayDeque<>(cacheSize/cacheLineSize);
+        cache_storage = new int[cacheSize/cacheLineSize][cacheLineSize];
+        location_stack = new ArrayDeque<>(cache_storage.length);
         address_to_cache_loc = new HashMap<>();
         cache_loc_to_address = new HashMap<>();
 
+        //Populate location stack with all locations
+        for (int i = 0; i < cache_storage.length; i++) {
+            location_stack.push(i);
+        }
+
         if (VERBOSE) {
             System.out.println("Initialised Cache");
+            System.out.println("Cache Storage :" + cache_storage.length + "x" + cacheLineSize);
+            System.out.println("Location Stack :" + location_stack);
         }
     }
 
@@ -63,7 +71,7 @@ class FullyAssocLiFoCache implements Cache {
         if (VERBOSE) System.out.println("Flushing cache");
         // WV: Your other data structures here
         //TODO: Impl write back
-        cache_storage = new int[cache_storage.length];
+        cache_storage = new int[cache_storage.length][CACHELINE_SZ];
         location_stack.clear();
         address_to_cache_loc.clear();
         cache_loc_to_address.clear();
@@ -90,7 +98,13 @@ class FullyAssocLiFoCache implements Cache {
         // The cache policy is write-back, so the writes are always to the cache. 
         // The update policy is write allocate: on a write miss, a cache line is loaded to cache, followed by a write operation. 
          // ...
-        if (location_stack.contains(cace))
+        status.setHitOrMiss(true);
+        if (!address_in_cache_line(address)) {
+            status.setHitOrMiss(false);
+            read_from_mem_on_miss(ram, address);
+        }
+        update_cache_entry(address, data);
+        status.setFreeLocations(location_stack.size());
     }
         
     private int read_data_from_cache(int[] ram,int address, Status status){
@@ -106,11 +120,13 @@ class FullyAssocLiFoCache implements Cache {
         int data = 0;
         if (!address_in_cache_line(address)) {
             status.setHitOrMiss(false);
+            status.setEvicted(true);
             read_from_mem_on_miss(ram, address);
         }
 
-        data = cache_storage[address_to_cache_loc.get(address) + cache_entry_position(address)];
+        data = fetch_cache_entry(address);
 
+        status.setFreeLocations(location_stack.size());
         status.setData(data);
         return data;
     }
@@ -124,6 +140,18 @@ class FullyAssocLiFoCache implements Cache {
         int loc;
         // Your code here
          // ...
+        int start_addr = cache_line_start_mem_address(cache_line_address(address));
+        loc = get_next_free_location();
+
+        if (loc == -1) {
+            write_to_mem_on_evict(ram, last_used_loc);
+            loc = get_next_free_location();
+        }
+
+        System.arraycopy(ram, start_addr, cache_line, 0, CACHELINE_SZ);
+        cache_storage[loc] = cache_line;
+        address_to_cache_loc.put(cache_line_address(address), loc);
+        cache_loc_to_address.put(loc, start_addr);
 
         last_used_loc=loc;
    }
@@ -133,7 +161,8 @@ class FullyAssocLiFoCache implements Cache {
         int loc;
          // Your code here
          // ...
-
+        loc = address_to_cache_loc.get(cache_line_address(address));
+        cache_storage[loc][cache_entry_position(address)] = data;
         last_used_loc=loc;
     }
 
@@ -145,26 +174,31 @@ class FullyAssocLiFoCache implements Cache {
          // ...
         loc = cache_line_address(address);
         cache_line = new int[CACHELINE_SZ];
-        System.arraycopy(cache_storage, loc, cache_line, 0, cache_line.length);
+        System.arraycopy(cache_storage[loc], 0, cache_line, 0, cache_line.length);
 
-        location_stack.remove(loc);
-        location_stack.push(loc);
         last_used_loc=loc;
 
-        return cache_line[cache_line_address(address)];
+        return cache_line[cache_entry_position(address)];
     }
 
     // Should return the next free location in the cache
     private int get_next_free_location(){
          // Your code here
          // ...
-        
+        if (cache_is_full()) {
+            return -1;
+        } else {
+            return location_stack.pop();
+        }
     }
 
     // Given a cache location, evict the cache line stored there
     private void evict_location(int loc){
          // Your code here
          // ...
+        location_stack.push(loc);
+        address_to_cache_loc.remove(cache_loc_to_address.get(loc));
+        cache_loc_to_address.remove(loc);
         if (VERBOSE) {
             System.out.println("Evicted: " + loc);
         }
@@ -173,7 +207,7 @@ class FullyAssocLiFoCache implements Cache {
     private boolean cache_is_full(){
          // Your code here
          // ...
-        return location_stack.size() >= CACHE_SZ/CACHELINE_SZ;
+        return location_stack.size() == 0;
     }
 
     // When evicting a cache line, write its contents back to main memory
@@ -184,7 +218,9 @@ class FullyAssocLiFoCache implements Cache {
         if (VERBOSE) System.out.println("Cache line to RAM: ");
         // Your code here
          // ...
-        
+        evicted_cl_address = cache_loc_to_address.get(loc);
+        cache_line = cache_storage[loc];
+        System.arraycopy(cache_line, 0, ram, evicted_cl_address, CACHELINE_SZ);
 
         evict_location(loc);
     }
