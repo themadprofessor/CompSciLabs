@@ -14,7 +14,7 @@ import java.util.Map;
 
 class FullyAssocLiFoCache implements Cache {
 
-    final private static boolean VERBOSE = true;
+    final private static boolean VERBOSE = false;
 
     final private int CACHE_SZ;
     final private int CACHELINE_SZ;
@@ -183,7 +183,7 @@ class FullyAssocLiFoCache implements Cache {
         int loc;
          // Your code here
          // ...
-        loc = cache_line_address(address);
+        loc = address_to_cache_loc.get(cache_line_address(address));
         cache_line = new int[CACHELINE_SZ];
         System.arraycopy(cache_storage[loc], 0, cache_line, 0, cache_line.length);
 
