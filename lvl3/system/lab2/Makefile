@@ -10,5 +10,7 @@ queueLIFO: qtest.o queueLIFO.o
 
 queuePrioLL: qtest.o queuePrioLL.o
 
+queuePrioMultiLL: qtest.o queuePrioMultiLL.o
+
 clean:
 	rm -f *.o queueFIFO queueLIFO queuePrioLL
