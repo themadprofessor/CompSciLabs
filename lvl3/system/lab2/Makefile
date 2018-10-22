@@ -13,4 +13,4 @@ queuePrioLL: qtest.o queuePrioLL.o
 queuePrioMultiLL: qtest.o queuePrioMultiLL.o
 
 clean:
-	rm -f *.o queueFIFO queueLIFO queuePrioLL
+	rm -f *.o queueFIFO queueLIFO queuePrioLL queuePrioMultiLL
