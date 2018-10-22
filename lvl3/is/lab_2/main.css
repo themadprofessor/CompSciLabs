@@ -1,0 +1,20 @@
+#header {
+	text-align: center;
+}
+
+#button_list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#button_list li {
+	display: inline;
+}
+
+.heading {
+}
+
+.content {
+}
+
