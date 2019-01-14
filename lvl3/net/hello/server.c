@@ -5,7 +5,6 @@
 #include <stdbool.h>
 #include <errno.h>
 #include <string.h>
-#include "errconv.h"
 
 int main() {
     int socket = socket(AF_INET, SOCK_STREAM, 0);
