@@ -27,15 +27,15 @@ int main(int argc, char* argv[]) {
     }
 
     struct addrinfo* current_info;
-    int socket;
+    int fd;
 
     for (current_info = addrinfo_list; current_info != NULL; current_info = current_info->ai_next) {
-        socket = socket(current_info->ai_family, current_info->ai_socktype, current_info->ai_protocol);
-        if (socket == -1) {
+        fd = socket(current_info->ai_family, current_info->ai_socktype, current_info->ai_protocol);
+        if (fd == -1) {
             continue;
         }
-        if (connect(socket, current_info->ai_addr, current_info->ai_addrlen) == -1) {
-            close(socket);
+        if (connect(fd, current_info->ai_addr, current_info->ai_addrlen) == -1) {
+            close(fd);
             continue;
         }
         break;
@@ -44,6 +44,14 @@ int main(int argc, char* argv[]) {
     if (current_info == NULL) {
         fprintf(stderr, "Failed to find IP address!\n");
         return -2;
+    }
+
+    char* data = "Hello there\n";
+    size_t len = strlen(data);
+    int flags = MSG_NOSIGNAL;
+    if (send(fd, data, len, flags) == -1) {
+        perror("Failed to send message");
+        return -3;
     }
 
     return 0;

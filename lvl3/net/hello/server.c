@@ -6,9 +6,11 @@
 #include <errno.h>
 #include <string.h>
 
+#define BUFSIZE 1500
+
 int main() {
-    int socket = socket(AF_INET, SOCK_STREAM, 0);
-    if (socket == -1) {
+    int fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (fd == -1) {
         perror("Failed to initialise socket");
         return -1;
     }
@@ -16,15 +18,15 @@ int main() {
     struct sockaddr_in addr;
     addr.sin_addr.s_addr = INADDR_ANY;
     addr.sin_family = AF_INET;
-    addr.sin_port = htons(80);
+    addr.sin_port = htons(25565);
 
-    if (bind(socket, (struct sockaddr*) &addr, sizeof(addr)) == -1) {
+    if (bind(fd, (struct sockaddr*) &addr, sizeof(addr)) == -1) {
         perror("Failed to bind socket");
         return -2;
     }
 
     int backlog = 10;
-    if (listen(socket, backlog) == -1) {
+    if (listen(fd, backlog) == -1) {
         perror("Failed to listen to socket");
         return -3;
     }
@@ -33,11 +35,20 @@ int main() {
         struct sockaddr_in client_addr;
         socklen_t client_addr_len = sizeof(client_addr);
 
-        int connection = accept(socket, (struct sockaddr*) &client_addr, &client_addr_len);
+        int connection = accept(fd, (struct sockaddr*) &client_addr, &client_addr_len);
         if (connection == -1) {
             perror("Failed to accept connect");
             continue;
         }
 
+        ssize_t count;
+        char buff[BUFSIZE] = {0};
+        int flags = 0;
+        count = recv(connection, buff, BUFSIZE, flags);
+        if (count == -1) {
+            perror("Failed to recive data");
+        }
+
+        printf("%s", buff);
     }
 }
