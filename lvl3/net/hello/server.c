@@ -9,7 +9,7 @@
 int main() {
     int socket = socket(AF_INET, SOCK_STREAM, 0);
     if (socket == -1) {
-        fprintf(stderr, "Failed to initialise socket! [%s]\n", strerror(errno));
+        perror("Failed to initialise socket! [%s]");
         return -1;
     }
 
@@ -19,13 +19,13 @@ int main() {
     addr.sin_port = htons(80);
 
     if (bind(socket, (struct sockaddr*) &addr, sizeof(addr)) == -1) {
-        fprintf(stderr, "Failed to bind socket! [%s]\n", strerror(errno));
+        perror("Failed to bind socket! [%s]");
         return -2;
     }
 
     int backlog = 10;
     if (listen(socket, backlog) == -1) {
-        fprintf(stderr, "Failed to listen to socket! [%s]\n", strerror(errno));
+        perror("Failed to listen to socket! [%s]");
         return -3;
     }
 
@@ -38,6 +38,4 @@ int main() {
 
         }
     }
-
-    return 0;
 }
