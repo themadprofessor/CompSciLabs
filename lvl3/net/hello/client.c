@@ -8,6 +8,8 @@
 #include <netdb.h>
 #include <unistd.h>
 
+#define BUFSIZE 1500
+
 int main(int argc, char* argv[]) {
     if (argc != 2) {
         fprintf(stderr, "Invalid number of arguments\n");
@@ -53,6 +55,15 @@ int main(int argc, char* argv[]) {
         perror("Failed to send message");
         return -3;
     }
+
+    ssize_t count;
+    char buff[BUFSIZE] = {0};
+    count = recv(fd, buff, BUFSIZE, flags);
+    if (count == -1) {
+        perror("Failed to receive data");
+    }
+
+    printf("%s\n", buff);
 
     return 0;
 }

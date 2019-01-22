@@ -46,9 +46,12 @@ int main() {
         int flags = 0;
         count = recv(connection, buff, BUFSIZE, flags);
         if (count == -1) {
-            perror("Failed to recive data");
+            perror("Failed to receive data");
         }
+        printf("Received %ldB\n", count);
 
-        printf("%s", buff);
+        if (send(connection, buff, (size_t) count, MSG_EOR) == -1) {
+            perror("Failed to send data");
+        }
     }
 }
