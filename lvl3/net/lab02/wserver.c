@@ -18,6 +18,7 @@
 #include <stdlib.h>   // For malloc()
 #include <signal.h>
 #include <unistd.h>
+include <limits.h>
 
 #define BUFLEN      1500
 #define NUM_THREADS   10
@@ -27,6 +28,7 @@
 // standard is available for purchase from ISO, but the final working draft
 // is online at http://www.open-std.org/jtc1/sc22/WG14/www/docs/n1570.pdf).
 static volatile sig_atomic_t shutdown_requested = 0;
+static char CWD[PATH_MAX];
 
 static void
 signal_handler(int sig)
@@ -227,7 +229,7 @@ send_response_200(int fd, char *filename, int inf, int id)
 
   // Send the requested file
   while ((rlen = read(inf, buf, BUFLEN)) > 0) {
-    if (send_response(fd, buf, strlen(buf)) == -1) {
+    if (send_response(fd, buf, rlen) == -1) {
       return -1;
     }
   }
@@ -419,7 +421,8 @@ response_thread(void *arg)
         break;
       }
 
-      sprintf(filename, "website%s", basename);
+      // TODO: Remove CWD and .. from this path before submission
+      sprintf(filename, "%s/../website%s", CWD, basename);
       if ((inf = open(filename, O_RDONLY, 0)) == -1) {
         if (send_response_404(fd, filename, id) == -1) {
           free(headers);
@@ -497,6 +500,7 @@ main(void)
 
   // Catch SIGINT (ctrl-c) and signal main loop to exit
   signal(SIGINT, signal_handler);
+  getcwd(CWD, sizeof(CWD));
 
   for (id = 0; id < NUM_THREADS; id++) {
     struct response_params *p = malloc(sizeof(struct response_params));
