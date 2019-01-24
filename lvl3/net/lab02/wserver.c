@@ -18,7 +18,7 @@
 #include <stdlib.h>   // For malloc()
 #include <signal.h>
 #include <unistd.h>
-include <limits.h>
+#include <limits.h>
 
 #define BUFLEN      1500
 #define NUM_THREADS   10
@@ -150,7 +150,7 @@ create_socket(void)
   }
 
   addr.sin_family      = AF_INET;
-  addr.sin_port        = htons(8080);
+  addr.sin_port        = htons(22565);
   addr.sin_addr.s_addr = INADDR_ANY;
 
   if (bind(fd, (struct sockaddr *) &addr, sizeof(addr)) == -1) {
