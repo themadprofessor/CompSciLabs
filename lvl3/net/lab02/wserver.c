@@ -190,6 +190,33 @@ send_response(int fd, const char *data, size_t datalen)
 }
 
 static int
+send_response_307(int fd, char* filename, int id)
+{
+  char buf[BUFLEN];
+  char path[BUFLEN];
+  sprintf(path, "%s/index.html", strchr(strchr(filename, '/')+1, '/')+1);
+  char* data = "<!DOCTYPE html>\r\n"
+               "<html lang='en'>\r\n"
+               "<head>\r\n"
+               "<meta charset='UTF-8'>\r\n"
+               "<title>Redirected</title>\r\n"
+               "</head>\r\n"
+               "<body>\r\n"
+               "<p>Redirecting...</p>\r\n"
+               "</body>\r\n"
+               "</html>\r\n";
+  sprintf(buf, "HTTP/1.1 307 Temporary Redirect\r\n"
+               "Location: %s\r\n"
+               "Content-Type: text/html\r\n"
+               "Content-Length: %lu\r\n"
+               "\r\n%s", path, strlen(data), data);
+
+  printf("responder %d: 307 %s\n", id, path);
+
+  return send_response(fd, buf, strlen(buf));
+}
+
+static int
 send_response_200(int fd, char *filename, int inf, int id)
 {
   // File exists, send OK response:
@@ -229,7 +256,7 @@ send_response_200(int fd, char *filename, int inf, int id)
 
   // Send the requested file
   while ((rlen = read(inf, buf, BUFLEN)) > 0) {
-    if (send_response(fd, buf, rlen) == -1) {
+    if (send_response(fd, buf, (size_t) rlen) == -1) {
       return -1;
     }
   }
@@ -387,6 +414,7 @@ response_thread(void *arg)
 {
   struct response_params *params = (struct response_params *) arg;
   struct work_queue      *wq = params->wq;
+  struct stat             path_stat;
   int                     id = params->id;
   int                     fd;
 
@@ -422,8 +450,17 @@ response_thread(void *arg)
       }
 
       // TODO: Remove CWD and .. from this path before submission
-      sprintf(filename, "%s/../website%s", CWD, basename);
-      if ((inf = open(filename, O_RDONLY, 0)) == -1) {
+      sprintf(filename, "../website%s", basename);
+      stat(filename, &path_stat);
+      size_t filename_len = strlen(filename);
+      if (S_ISDIR(path_stat.st_mode)) {
+        if (*(filename + filename_len) == '/') {
+          *(filename + filename_len) = '\0';
+        }
+        send_response_307(fd, filename, id);
+        free(headers);
+        break;
+      } else if ((inf = open(filename, O_RDONLY, 0)) == -1) {
         if (send_response_404(fd, filename, id) == -1) {
           free(headers);
           break;
