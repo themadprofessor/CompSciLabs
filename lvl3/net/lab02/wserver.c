@@ -28,7 +28,6 @@
 // standard is available for purchase from ISO, but the final working draft
 // is online at http://www.open-std.org/jtc1/sc22/WG14/www/docs/n1570.pdf).
 static volatile sig_atomic_t shutdown_requested = 0;
-static char CWD[PATH_MAX];
 
 static void
 signal_handler(int sig)
@@ -537,7 +536,6 @@ main(void)
 
   // Catch SIGINT (ctrl-c) and signal main loop to exit
   signal(SIGINT, signal_handler);
-  getcwd(CWD, sizeof(CWD));
 
   for (id = 0; id < NUM_THREADS; id++) {
     struct response_params *p = malloc(sizeof(struct response_params));
