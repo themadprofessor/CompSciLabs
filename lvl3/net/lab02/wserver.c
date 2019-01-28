@@ -19,6 +19,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include <limits.h>
+#include <dirent.h>
 
 #define BUFLEN      1500
 #define NUM_THREADS   10
@@ -149,7 +150,7 @@ create_socket(void)
   }
 
   addr.sin_family      = AF_INET;
-  addr.sin_port        = htons(22565);
+  addr.sin_port        = htons(22568);
   addr.sin_addr.s_addr = INADDR_ANY;
 
   if (bind(fd, (struct sockaddr *) &addr, sizeof(addr)) == -1) {
@@ -189,11 +190,59 @@ send_response(int fd, const char *data, size_t datalen)
 }
 
 static int
+send_response_dir(int fd, char* dir, int id)
+{
+    char headers[BUFLEN];
+    char data[BUFLEN];
+    char* data_ptr = data;
+    DIR* directory;
+    struct dirent* file;
+
+    if ((directory = opendir(dir)) == NULL) {
+      return -1;
+    }
+
+    data_ptr += sprintf(data_ptr, "<!DOCTYPE html>\r\n"
+                  "<html lang='en'>\r\n"
+                  "<head>\r\n"
+                  "<meta charset='UTF-8>\r\n"
+                  "<title>%s</title>\r\n"
+                  "</head>\r\n"
+                  "<body>\r\n"
+                  "<ul>\r\n", dir);
+
+    while ((file = readdir(directory)) != NULL) {
+      data_ptr += sprintf(data_ptr, "<li><a href='%s'>%s</a></li>\r\n", file->d_name, file->d_name);
+    }
+
+    sprintf(data_ptr, "</ul>\r\n</body>\r\n</html>");
+    sprintf(headers, "HTTP/1.1 200 OK\r\n"
+                     "Content-Type: text/html\r\n"
+                     "Content-Length: %lu\r\n"
+                     "\r\n", strlen(data));
+
+    size_t data_len = strlen(data);
+    printf("responder %d: 200 %s (%lu bytes)\n", id, dir, data_len);
+
+    if (send_response(fd, headers, strlen(headers)) == -1) {
+      return -1;
+    }
+
+  return send_response(fd, data, data_len);
+}
+
+static int
 send_response_307(int fd, char* filename, int id)
 {
+  struct stat stats;
   char buf[BUFLEN];
   char path[BUFLEN];
   sprintf(path, "%s/index.html", strchr(strchr(filename, '/')+1, '/')+1);
+
+  if (stat(path, &stats) != 0) {
+    return send_response_dir(fd, filename, id);
+  }
+
   char* data = "<!DOCTYPE html>\r\n"
                "<html lang='en'>\r\n"
                "<head>\r\n"
