@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="CargoProjects">
+    <cargoProject FILE="$PROJECT_DIR$/lvl3/net/lab04/rust/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/lvl3/net/lab04/rust/client/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/lvl3/net/lab04/rust/server/Cargo.toml" />
+  </component>
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/lvl2/week7/Submission7/doc" />
     <option name="OPTION_SCOPE" value="protected" />
