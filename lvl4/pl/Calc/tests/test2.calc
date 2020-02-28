@@ -1,0 +1,7 @@
+//comment
+set ac = 3
+set b = 4
+set c = 5
+set s = (ac+b+c)/2
+put s
+put s*(s-ac)*(s-b)*(s-c)
